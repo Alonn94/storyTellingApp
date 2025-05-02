@@ -34,3 +34,13 @@ export const updateStory = async (
     );
     return result.rows[0];
 };
+
+export const deleteStoryById = async (storyId: number) => {
+    const result = await pool.query(
+      `DELETE FROM stories WHERE id = $1 RETURNING id`,
+      [storyId]
+    );
+    return result.rows[0];
+  };
+
+  

@@ -3,16 +3,9 @@ import { Request, Response } from "express";
 import {createStory} from "../models/storyModel";
 import { getAllStories as getStoriesFromDb } from "../models/storyModel";
 import { updateStory as updateStoryInDb } from "../models/storyModel";
+import { deleteStoryById} from "../models/storyModel";
 
-export const deleteStory = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const { storyId } = req.params;
-        // Logic to delete the story
-        res.status(200).json({ message: "Story deleted successfully" });
-    } catch (error) {
-        res.status(500).json({ error: "Failed to delete story" });
-    }
-};
+// Removed duplicate deleteStory function
 
 
 export const postStory = async (req: Request, res: Response) => {
@@ -62,4 +55,21 @@ export const updateStory = async (req: Request, res: Response) => {
         res. status(500).json({message: "Server error while updating story"});
     }
 };
+
+
+export const deleteStory = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { storyId } = req.params;
+        const deleted = await deleteStoryById(parseInt(storyId));
+        if (!deleted) {
+            res.status(404).json({ message: "Story not found" });
+            return;
+        }
+        res.status(200).json({ message: "Story deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting story:", error);
+        res.status(500).json({ message: "Server error while deleting story" });
+    }
+};
+
 
