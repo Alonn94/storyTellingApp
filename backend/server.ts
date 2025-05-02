@@ -13,12 +13,11 @@ app.use (express.json());
 app.use (cookieParser());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/stories", storyRoutes);
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
 
-// After auth routes
-app.use("/api/stories", storyRoutes);
 
 app.get("/ping", (req, res) => {
     res.send("pong");
