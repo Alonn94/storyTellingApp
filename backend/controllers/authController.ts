@@ -1,5 +1,5 @@
 import {Request, Response, NextFunction } from "express";
-import brcrypt from "bcrypt";
+import brcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { createUser, findUserByEmail } from "../models/userModel";
 
