@@ -12,3 +12,10 @@ export const createStory = async (title:string, content: string, authorId: numbe
 };
 
 
+export const getAllStories = async()  => {
+    const result = await pool.query(
+        `SELECT id,title,content,author_id, created_at, updated_at FROM stories ORDER BY created_at DESC`
+    );
+    return result.rows;
+    
+}
