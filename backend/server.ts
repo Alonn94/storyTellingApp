@@ -7,7 +7,7 @@ import storyRoutes from "./routes/storyRoutes";
 
 dotenv.config();
 const app = express();
-const PORT = 5001;
+const PORT = process.env.PORT || 5001; // 5001 is fallback for local dev
 app.use(cors()); // Temporarily allow everything
 app.use (express.json());
 app.use (cookieParser());
