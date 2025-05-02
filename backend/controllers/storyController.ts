@@ -2,6 +2,7 @@
 import { Request, Response } from "express";
 import {createStory} from "../models/storyModel";
 import { getAllStories as getStoriesFromDb } from "../models/storyModel";
+import { updateStory as updateStoryInDb } from "../models/storyModel";
 
 export const deleteStory = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -42,4 +43,23 @@ export const getAllStories = async (req: Request, res: Response) => {
     }
 };
 
+export const updateStory = async (req: Request, res: Response) => {
+    const {title, content} = req.body;
+    const {storyId} = req.params;
+
+    if (!title || !content) {
+        return res.status(400).json({message: "Title and content are required"});
+    }
+    try {
+        const updated= await updateStoryInDb(parseInt(storyId), title, content);
+
+        if (!updated) {
+            return res.status(404).json({message: "Story not found"});
+        }
+        res. status(200).json({story: updated});
+    } catch (error) {
+        console.error ("Error updating story:", error);
+        res. status(500).json({message: "Server error while updating story"});
+    }
+};
 
