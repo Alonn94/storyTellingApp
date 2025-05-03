@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { addContributor } from "../models/contributorModel";
+import { getContributorsByStoryId } from "../models/contributorModel";
+
 
 export const postContributor = async (req: Request, res: Response) => {
   const { story_id, user_id } = req.body;
@@ -17,5 +19,17 @@ export const postContributor = async (req: Request, res: Response) => {
   } catch (error:any) {
     console.error("Error adding contributor:", error.message || error);
     res.status(500).json({ message: "Failed to add contributor." });
+  }
+};
+
+export const getContributors = async (req: Request, res: Response) => {
+  const { story_id } = req.params;
+
+  try {
+    const contributors = await getContributorsByStoryId(parseInt(story_id));
+    res.status(200).json({ contributors });
+  } catch (error: any) {
+    console.error("Error fetching contributors:", error.message || error);
+    res.status(500).json({ message: "Failed to fetch contributors." });
   }
 };

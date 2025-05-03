@@ -10,3 +10,17 @@ export const addContributor = async (storyId: number, userId: number) => {
 
   return result.rows[0];
 };
+
+export const getContributorsByStoryId = async (storyId: number) => {
+    const result = await pool.query(
+      `
+      SELECT users.id, users.username, users.email
+      FROM contributors
+      JOIN users ON contributors.user_id = users.id
+      WHERE contributors.story_id = $1
+      `,
+      [storyId]
+    );
+  
+    return result.rows;
+  };
