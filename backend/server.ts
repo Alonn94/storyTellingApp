@@ -10,8 +10,12 @@ import contributorRoutes from "./routes/contributorRoutes";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001; // 5001 is fallback for local dev
-app.use(cors()); // Temporarily allow everything
-app.use (express.json());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // allow your frontend
+    credentials: true, // important for sending cookies
+  })
+);app.use (express.json());
 app.use (cookieParser());
 
 app.use("/api/auth", authRoutes);
