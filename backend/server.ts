@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes";
 import storyRoutes from "./routes/storyRoutes";
+import contributorRoutes from "./routes/contributorRoutes";
+
 
 dotenv.config();
 const app = express();
@@ -14,6 +16,7 @@ app.use (cookieParser());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/stories", storyRoutes);
+app.use("/api/contributors", contributorRoutes);
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
@@ -22,3 +25,5 @@ app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 app.get("/ping", (req, res) => {
     res.send("pong");
   });
+
+
