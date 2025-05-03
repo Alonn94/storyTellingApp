@@ -24,3 +24,11 @@ export const getContributorsByStoryId = async (storyId: number) => {
   
     return result.rows;
   };
+
+  export const deleteContributorById = async (contributorId: number) => {
+    const result = await pool.query(
+      `DELETE FROM contributors WHERE id = $1 RETURNING id`,
+      [contributorId]
+    );
+    return result.rows[0]; // if null, it didn’t exist
+  };
