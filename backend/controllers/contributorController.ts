@@ -14,8 +14,8 @@ export const postContributor = async (req: Request, res: Response) => {
   try {
     const contributor = await addContributor(story_id, user_id);
     res.status(201).json({ contributor });
-  } catch (error) {
-    console.error("Error adding contributor:", error);
+  } catch (error:any) {
+    console.error("Error adding contributor:", error.message || error);
     res.status(500).json({ message: "Failed to add contributor." });
   }
 };
