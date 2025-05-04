@@ -1,10 +1,12 @@
 // src/app/store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import storyReducer from "../features/storySlice";
+import userReducer from "../features/userSlice";
 
 export const store = configureStore({
   reducer: {
     story: storyReducer,
+    user: userReducer,
   },
 });
 

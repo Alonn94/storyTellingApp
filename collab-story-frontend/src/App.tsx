@@ -1,22 +1,40 @@
-import { Provider } from "react-redux";
-import { store } from "./store/store";
-import { Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "./store/store";
+import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./app/pages/HomePage";
 import LoginPage from "./app/pages/LoginPage";
 import SignupPage from "./app/pages/SignupPage";
 import StoryViewer from "./app/pages/StoryViewer";
+import { JSX } from "react";
 
+// ProtectedRoute component
+const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+  const token = useSelector((state: RootState) => state.user.token);
+  return token ? children : <Navigate to="/login" replace />;
+};
 
 const App = () => {
   return (
-    <Provider store={store}>
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/stories/:id"
+        element={
+          <ProtectedRoute>
+            <StoryViewer />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
-      <Route path="/stories/:id" element={<StoryViewer />} />
     </Routes>
-    </Provider>
   );
 };
 
